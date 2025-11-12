@@ -1,0 +1,27 @@
+[tools]
+cmake = "3.21.7"
+
+
+[tasks."configure:x64-win-mt"]
+run = "cmake --preset=x64-win-mt"
+
+[tasks."build:x64-win-mt-rel"]
+run = "cmake --build --preset=x64-win-mt --config Release"
+
+[tasks."configure:x64-win-md"]
+run = "cmake --preset=x64-win-md"
+
+[tasks."build:x64-win-md-rel"]
+run = "cmake --build --preset=x64-win-md --config Release"
+
+[tasks."configure:x64-win-static-md"]
+run = "cmake --preset=x64-win-static-md"
+
+[tasks."build:x64-win-static-md-rel"]
+run = "cmake --build --preset=x64-win-static-md --config Release"
+
+[tasks.configure]
+depends = ["configure:*"]
+
+[tasks.build]
+depends = ["build:*"]

@@ -1,0 +1,68 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 21,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "x64-win-base",
+      "hidden": true,
+      "generator": "Visual Studio 17 2022",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "architecture": "x64",
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+        "CMAKE_CONFIGURATION_TYPES": "Debug;RelWithDebInfo;Release"
+      }
+    },
+    {
+      "name": "x64-win-mt",
+      "description": "/MT(d) を指定して C ランタイムライブラリを静的にリンクする",
+      "inherits": [
+        "x64-win-base"
+      ],
+      "cacheVariables": {
+        "VCPKG_TARGET_TRIPLET": "x64-windows-static",
+        "CMAKE_MSVC_RUNTIME_LIBRARY": "MultiThreaded$<$<CONFIG:Debug>:Debug>"
+      }
+    },
+    {
+      "name": "x64-win-md",
+      "description": "/MD(d) を指定して C ランタイムライブラリを動的にリンクする",
+      "inherits": [
+        "x64-win-base"
+      ],
+      "cacheVariables": {
+        "VCPKG_TARGET_TRIPLET": "x64-windows",
+        "CMAKE_MSVC_RUNTIME_LIBRARY": "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL"
+      }
+    },
+    {
+      "name": "x64-win-static-md",
+      "description": "vcpkg 経由で追加したライブラリを静的リンクするが、 C ランタイムライブラリは動的リンク (/MD) する",
+      "inherits": [
+        "x64-win-base"
+      ],
+      "cacheVariables": {
+        "VCPKG_TARGET_TRIPLET": "x64-windows-static-md",
+        "CMAKE_MSVC_RUNTIME_LIBRARY": "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "x64-win-md",
+      "configurePreset": "x64-win-md"
+    },
+    {
+      "name": "x64-win-mt",
+      "configurePreset": "x64-win-mt"
+    },
+    {
+      "name": "x64-win-static-md",
+      "configurePreset": "x64-win-static-md"
+    }
+  ]
+}
